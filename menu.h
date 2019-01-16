@@ -12,7 +12,7 @@ bool show_menu_textures()
   SBDL::showTexture( menu_background , 0 , 0 );
   SBDL::showTexture( welcome_texture , (screen_width - welcome_texture.width ) / 2 ,screen_height/7 );
   SBDL::showTexture( start_texture , (screen_width - start_texture.width ) / 2, screen_height/2.2 );
-  SBDL::showTexture( play_texture ,  screen_width - icon_size , screen_height - icon_size );
+
 
   if (sound_state) SBDL::showTexture( sound_texture , 0 , screen_height - icon_size );
   else SBDL::showTexture( no_sound_texture , 0 , screen_height - icon_size );
@@ -29,6 +29,7 @@ bool show_menu_textures()
 
 bool load_menu_textures(std::string text_title)
 {
+  /*
   menu_background = SBDL::loadTexture( "assets/MenuBackground.png" );
 
   Font * welc_font = SBDL::loadFont("assets/Font/gobold.ttf",32);
@@ -50,7 +51,7 @@ bool load_menu_textures(std::string text_title)
 
   Font * menu_score_font = SBDL::loadFont("assets/Font/gobold.ttf",35);
   menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
-
+*/
 
   return true;
 }
@@ -67,17 +68,6 @@ bool new_game(std::string text_title)
 {
   if(text_title != Game_Over) return false;
   score = 0;
-  FPS = main_FPS;
-  for(int i=0;i<3;i++)
-  {
-    left_block[i].is_moving = false;
-    left_block[i].y = block_start_point;
-    right_block[i].is_moving = false;
-    right_block[i].y = block_start_point;
-  }
-  car_r_pos = rand()%2;
-  car_l_pos = rand()%2;
-  block_turn = (rand()%2 == 0)?left:right;
 
   return true;
 }
@@ -96,12 +86,12 @@ bool menu(std::string text_title = main_windows_title)
     if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(text_title); return true;}
     if (SBDL::Mouse.clicked())
     {
-      if ( SBDL::mouseInRect( play_rect ) ) {new_game(text_title); return true;}
-      if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;;
-      if ( SBDL::mouseInRect( music_rect ) ) change_music();
+  //    if ( SBDL::mouseInRect( play_rect ) ) {new_game(text_title); return true;}
+  //    if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;;
+  //    if ( SBDL::mouseInRect( music_rect ) ) change_music();
     }
     show_menu_textures();
-    SBDL::delay(1000/main_FPS);
+    SBDL::delay(1000/FPS);
   }
   return true;
 }
