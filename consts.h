@@ -1,9 +1,10 @@
 const unsigned int FPS = 35;
-
 const int screen_width = 1500;
 const int screen_height = 800;
 
 const int game_x = 20;
+const unsigned int run_speed =12;
+const unsigned int score_rate = 50;
 
 const unsigned short int harder = 5;
 
@@ -27,21 +28,22 @@ enum suits { Smain, Sgreen, Sgravity };
 
 struct player
 {
-  Texture tex ;
+  Texture tex[3][4];
+  unsigned short this_tex = 3;
   const int x = screen_height * 0.39;
-  int y = screen_height / 5;
+  int y = screen_height / 3;
   int vy = 0;
   int ay = g;
   bool on_earth= false;
   bool jet_on = false;
-  bool gravity_suit = false;
-  bool gravity_revers = false;
+  bool g_revers = false;
   bool speed_token = false;
   suits suit = Smain;
 };
 
 player barry;
 
+Texture coin[6];
 
 Music *game_music = NULL;
 Sound *score_sound = NULL;
