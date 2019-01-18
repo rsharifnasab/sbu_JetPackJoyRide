@@ -51,10 +51,10 @@ bool init()
 
 bool handle_keyboard()
 {
-  if (SBDL::keyPressed(SDL_SCANCODE_RIGHT)) ;
-  if (SBDL::keyPressed(SDL_SCANCODE_LEFT))  ;
-  if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("Game Paused");
-  return true;
+    if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) barry.jet_on = true;
+    else barry.jet_on = false;
+    if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("Game Paused");
+    return true;
 }
 
 bool load_game_texture()
@@ -68,8 +68,9 @@ bool load_game_texture()
 
 bool show_game_texture()
 {
+  SBDL::clearRenderScreen();
   //SBDL::showTexture( background , 0 , 0 );
-  SBDL::showTexture( barry.tex , 50 , 50 );
+  SBDL::showTexture( barry.tex , barry.x ,  barry.y );
 
 	//score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   //SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
@@ -114,10 +115,22 @@ bool play_sound(sound_type s)
 */
 bool handle_physics()
 {
+  if(barry.jet_on)
+  {
+    if(barry.vy >0 ) barry.vy /= 1.5;
+    barry.ay = -(g);
+    if( barry.y <=0 ) barry.vy = 0; 
+  }
+  else barry.ay = g;
   barry.vy+=barry.ay;
   barry.y+=barry.vy;
-  if(barry.y < 0) barry.y = 0;
-  if(barry.y + barry.tex.height >  screen_height) barry.y = screen_height - barry.tex.height;
+  if(barry.y < 0) { barry.y = 0; }
+  if(barry.y + barry.tex.height >screen_height)
+  { barry.y = screen_height - barry.tex.height;
+    barry.vy=0;
+
+  }
+  else  barry.on_earth = false;
   return true;
 }
 
@@ -125,7 +138,7 @@ bool handle_physics()
 int main()
 {
   init();
-  menu();
+//  menu();
   load_game_texture();
 
   while( SBDL::isRunning() )
