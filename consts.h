@@ -1,7 +1,7 @@
 const unsigned int FPS = 45;
 
-const int screen_width = 1700;
-const int screen_height = 700;
+const int screen_width = 800;
+const int screen_height = 600;
 const int bary_x = 0.3 * screen_width;
 
 const unsigned short int harder = 5;
@@ -22,15 +22,21 @@ Sound *score_sound = NULL;
 
 int g =10;
 
+enum suits { Smain, Sgreen, Sgravity };
+
 struct player
 {
   Texture tex ;
-  int x = screen_height * 0.2;
+  const int x = screen_height * 0.35;
   int y = screen_height / 2;
-  int vx = 0;
   int vy = 0;
-  int ax = 0;
   int ay = g;
+  bool on_earth= false;
+  bool jet_on = false;
+  bool gravity_suit = false;
+  bool gravity_revers = false;
+  bool fast_forward = false;
+  suits suit = Smain;
 };
 
 player barry;

@@ -60,15 +60,16 @@ bool handle_keyboard()
 bool load_game_texture()
 {
   //background = SBDL::loadTexture( "assets/Background.png" );
-  barry.tex = SBDL::loadTexture( "./assets/pic/barry/barry.png" );
+  barry.tex = SBDL::loadTexture( "./assets/pic/barry/barry2.png" );
+
   //score_font = SBDL::loadFont("assets/Font/gobold.ttf",27);
   return true;
 }
 
 bool show_game_texture()
 {
-  SBDL::showTexture( background , 0 , 0 );
-  SBDL::showTexture( barry.tex , 0 , 0 );
+  //SBDL::showTexture( background , 0 , 0 );
+  SBDL::showTexture( barry.tex , 50 , 50 );
 
 	//score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   //SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
@@ -113,14 +114,11 @@ bool play_sound(sound_type s)
 */
 bool handle_physics()
 {
-  barry.vx+=barry.ax;
   barry.vy+=barry.ay;
-  barry.x+=barry.vx;
   barry.y+=barry.vy;
-  if(barry.x < 0) barry.x = 0;
   if(barry.y < 0) barry.y = 0;
-  if(barry.x + barry.tex.width >  screen_width) barry.x = screen_width - barry.tex.width;
   if(barry.y + barry.tex.height >  screen_height) barry.y = screen_height - barry.tex.height;
+  return true;
 }
 
 
