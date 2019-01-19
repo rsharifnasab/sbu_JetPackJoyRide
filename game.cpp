@@ -37,17 +37,6 @@ bool init_music()
   }
 }
 
-bool init()
-{
-  SBDL::InitEngine ("Jetpack Joyride", screen_width, screen_height);
-  srand(time(0));
-
-  init_high_score();
-  init_music();
-
-  return true;
-}
-
 
 bool handle_keyboard()
 {
@@ -108,6 +97,16 @@ bool load_game_texture()
   load_coin_texture();
 
   score_font = SBDL::loadFont("assets/font/Jetpackia.ttf",27);
+  return true;
+}
+
+bool init()
+{
+  SBDL::InitEngine ("Jetpack Joyride", screen_width, screen_height);
+  srand(time(0));
+  init_high_score();
+  init_music();
+  load_game_texture();
   return true;
 }
 
@@ -221,9 +220,7 @@ int main()
 {
   init();
 //  menu();
-  load_game_texture();
-
-  while( SBDL::isRunning() )
+  while(SBDL::isRunning())
   {
     unsigned int start_time = SBDL::getTime();
     score_add();
