@@ -23,34 +23,30 @@ bool init_high_score()
 
 bool init_music()
 {
-  try{
-    game_music = SBDL::loadMusic("./assets/sound/music.mp3");
-    if(music_state) SBDL::playMusic(game_music, -1);
+  game_music = SBDL::loadMusic("./assets/sound/music.mp3");
+  if(music_state) SBDL::playMusic(game_music, -1);
   //  score_sound = SBDL::loadSound("assets/Sounds/score.wav");
   //  die1_sound = SBDL::loadSound("assets/Sounds/die1.wav");
   //  die2_sound = SBDL::loadSound("assets/Sounds/die2.wav");
-    return true;
-  }
-  catch (int e){
-    std::cout << "An exception occurred. Exception Nr. " << e << '\n';
-    return false;
-  }
+  return true;
 }
 
 
 bool handle_keyboard()
 {
-    if (SBDL::keyHeld(SDL_SCANCODE_SPACE) && barry.suit!= Sgravity)
-      barry.jet_on = true;
-    else barry.jet_on = false;
+  SBDL::updateEvents();
 
-    if (SBDL::keyPressed(SDL_SCANCODE_SPACE) && barry.suit==Sgravity)
-    {
-      barry.g_revers=!barry.g_revers;
-      barry.vy = 0.3 * barry.vy;
-    }
-    if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("Game Paused");
-    return true;
+  if (SBDL::keyHeld(SDL_SCANCODE_SPACE) && barry.suit!= Sgravity)
+    barry.jet_on = true;
+  else barry.jet_on = false;
+
+  if (SBDL::keyPressed(SDL_SCANCODE_SPACE) && barry.suit==Sgravity)
+  {
+    barry.g_revers=!barry.g_revers;
+    barry.vy = 0.3 * barry.vy;
+  }
+  if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("Game Paused");
+  return true;
 }
 
 
@@ -95,7 +91,6 @@ bool load_game_texture()
   load_background_texture();
   load_player_texture();
   load_coin_texture();
-
   score_font = SBDL::loadFont("assets/font/Jetpackia.ttf",27);
   return true;
 }
@@ -120,8 +115,7 @@ bool show_background()
 bool show_player()
 {
   static unsigned int counter = 0;
-  counter++;
-  counter %= run_speed;
+  counter = (counter+1) % run_speed;
   barry.this_tex = counter >= run_speed/2 ;
   if(barry.suit != Sgravity)
   {
@@ -129,10 +123,7 @@ bool show_player()
     if(!barry.on_earth && !barry.jet_on) barry.this_tex = 3;
   }
   else
-  {
     barry.this_tex += 2*barry.g_revers;
-
-  }
   SBDL::showTexture( barry.tex[barry.suit][barry.this_tex], barry.x ,  barry.y );
   return true;
 }
@@ -148,6 +139,7 @@ bool show_game_texture()
 	Texture score_tex = SBDL::createFontTexture(score_font ,"distance:"+std::to_string(score)+" HIGHEST:"+std::to_string(high_score),30,220,50);
   SBDL::showTexture( score_tex , screen_width * 0.77 , 0);
 
+  SBDL::updateRenderScreen();
   return true;
 }
 
@@ -195,15 +187,14 @@ bool handle_physics()
 {
   if(barry.jet_on)
   {
-    if(barry.vy >0 ) barry.vy /= 1.5;
-    barry.ay = -(g);
+    if(barry.vy >0 ) barry.vy = 0;
+    barry.ay = jet_a;
     if( barry.y <=0 ) barry.vy = 0;
   }
-  else barry.ay = g + (g * (-2) * barry.g_revers);
+  else barry.ay = g + (-2 * g * barry.g_revers);
   barry.vy+=barry.ay;
   barry.y+=barry.vy;
   if(barry.y < 0) { barry.y = 0; barry.vy=0; }
-
   if(barry.y + barry.tex[barry.suit][barry.this_tex].height > screen_height)
   {
     barry.y = screen_height - barry.tex[barry.suit][barry.this_tex].height;
@@ -224,7 +215,7 @@ int main()
   {
     unsigned int start_time = SBDL::getTime();
     score_add();
-    SBDL::updateEvents();
+
     handle_keyboard();
 
     handle_physics();

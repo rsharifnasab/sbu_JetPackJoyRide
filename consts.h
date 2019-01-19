@@ -22,7 +22,8 @@ int high_score=0;
 enum { zapper , laser , } enemy;
 
 
-int g =+1;
+const int g =+1;
+const int jet_a = -g;
 
 enum suits { Smain, Sgreen, Sgravity };
 
