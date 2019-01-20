@@ -3,6 +3,7 @@
 #include "SBDL.h"
 #include "consts.h"
 #include "player.h"
+#include "setting.h"
 #include "menu.h"
 #include "coin.h"
 #include "background.h"
@@ -133,7 +134,7 @@ bool play_sound(sound_type s)
 int main()
 {
   init();
-//  menu();
+  menu();
   while(SBDL::isRunning())
   {
     unsigned int start_time = SBDL::getTime();
