@@ -14,7 +14,7 @@ bool load_paral()
 
   parals[back][1]= SBDL::loadTexture( "./assets/pic/parallex/Second P2.png" );
   parals[back][1]= SBDL::loadTexture( "./assets/pic/parallex/Second P2.png" );
-          
+
   return true;
 }
 
@@ -39,6 +39,33 @@ bool load_background_texture()
 
 bool show_background()
 {
+  static long int first_x = 0;
+  first_x+=game_vx;
+  long int came_x = 0;
+  SBDL::showTexture(background[lab][start], first_x+came_x ,0);
+  came_x+=background[lab][start].width;
+  SBDL::showTexture(background[lab][one], first_x+came_x ,0);
+  came_x+=background[lab][one].width;
+  SBDL::showTexture(background[lab][two], first_x+came_x ,0);
+  came_x+=background[lab][two].width;
 
-    return true;
+
+  SBDL::showTexture(background[volca][start], first_x+came_x ,0);
+  came_x+=background[volca][start].width;
+  SBDL::showTexture(background[volca][one], first_x+came_x ,0);
+  came_x+=background[volca][one].width;
+  SBDL::showTexture(background[volca][two], first_x+came_x ,0);
+  came_x+=background[volca][two].width;
+
+
+  SBDL::showTexture(background[paral][start], first_x+came_x ,0);
+  came_x+=background[paral][start].width;
+  SBDL::showTexture(background[paral][one], first_x+came_x ,0);
+  came_x+=background[paral][one].width;
+  SBDL::showTexture(background[paral][two], first_x+came_x ,0);
+  came_x+=background[paral][two].width;
+
+  SBDL::showTexture(background[lab][start], first_x+came_x ,0);
+  first_x %= (came_x) ;
+  return true;
 }

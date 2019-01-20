@@ -75,16 +75,21 @@ bool init()
   return true;
 }
 
+bool show_score()
+{
+  Texture score_tex = SBDL::createFontTexture(score_font ,"distance:"+std::to_string(score)+" HIGHEST:"+std::to_string(high_score)+" COINS:"+std::to_string(coin_ate_number),30,220,50);
+  SBDL::showTexture( score_tex , score_x - score_tex.width , score_y);
+  SBDL::freeTexture(score_tex);
+  return true;
+}
+
 bool show_game_texture()
 {
   SBDL::clearRenderScreen();
   show_background();
   show_coin_texture();
   show_player();
-
-	Texture score_tex = SBDL::createFontTexture(score_font ,"distance:"+std::to_string(score)+" HIGHEST:"+std::to_string(high_score)+" COINS:"+std::to_string(coin_ate_number),30,220,50);
-  SBDL::showTexture( score_tex , score_x - score_tex.width , score_y);
-
+  show_score();
   SBDL::updateRenderScreen();
   return true;
 }
