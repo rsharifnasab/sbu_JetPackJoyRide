@@ -7,7 +7,7 @@
 #include "coin.h"
 #include "background.h"
 
-Texture background;
+
 
 bool init_high_score()
 {
