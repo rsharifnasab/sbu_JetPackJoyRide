@@ -77,12 +77,10 @@ bool menu(std::string text_title = main_windows_title)
 {
   first_time = (text_title == main_windows_title);
   load_menu_textures(text_title);
-  show_menu_textures();
 
   while( SBDL::isRunning() )
   {
     SBDL::updateEvents();
-
     if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(text_title); return true;}
     if (SBDL::Mouse.clicked())
     {

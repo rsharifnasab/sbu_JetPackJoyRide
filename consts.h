@@ -18,6 +18,8 @@ std::string Game_Over = "Game Over";
 Font * score_font = NULL;
 int score = 0;
 int high_score=0;
+const unsigned int score_x = screen_width * 0.77;
+const unsigned int score_y = 0;
 
 enum { zapper , laser , } enemy;
 
@@ -44,8 +46,6 @@ struct player
 
 player barry;
 
-Texture coin[6];
-
 Music *game_music = NULL;
 Sound *score_sound = NULL;
-enum sound_type { score_s, die1_s, die2_s };
+enum sound_type { coin_s, die1_s, die2_s };

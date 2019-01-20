@@ -3,7 +3,7 @@
 #include "SBDL.h"
 #include "consts.h"
 #include "menu.h"
-
+#include "coin.h"
 Texture background;
 
 bool init_high_score()
@@ -31,7 +31,6 @@ bool init_music()
   return true;
 }
 
-
 bool handle_keyboard()
 {
   SBDL::updateEvents();
@@ -53,17 +52,6 @@ bool handle_keyboard()
 bool load_background_texture() // TODO
 {
   //background = SBDL::loadTexture( "assets/Background.png" );
-  return true;
-}
-
-bool load_coin_texture()
-{
-  coin[0]= SBDL::loadTexture( "./assets/pic/coin/1.png" );
-  coin[1]= SBDL::loadTexture( "./assets/pic/coin/2.png" );
-  coin[2]= SBDL::loadTexture( "./assets/pic/coin/3.png" );
-  coin[3]= SBDL::loadTexture( "./assets/pic/coin/4.png" );
-  coin[4]= SBDL::loadTexture( "./assets/pic/coin/5.png" );
-  coin[5]= SBDL::loadTexture( "./assets/pic/coin/6.png" );
   return true;
 }
 
@@ -102,6 +90,8 @@ bool init()
   init_high_score();
   init_music();
   load_game_texture();
+  set_coin_place();
+
   return true;
 }
 
@@ -133,11 +123,11 @@ bool show_game_texture()
 {
   SBDL::clearRenderScreen();
   show_background();
+  show_coin_texture();
   show_player();
-
-
+  
 	Texture score_tex = SBDL::createFontTexture(score_font ,"distance:"+std::to_string(score)+" HIGHEST:"+std::to_string(high_score),30,220,50);
-  SBDL::showTexture( score_tex , screen_width * 0.77 , 0);
+  SBDL::showTexture( score_tex , score_x , score_y);
 
   SBDL::updateRenderScreen();
   return true;
