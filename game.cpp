@@ -130,6 +130,17 @@ bool play_sound(sound_type s)
     return true;
 }
 
+bool add_power_up() // TODO
+{
+
+
+
+  return true;
+}
+
+
+
+
 int main()
 {
   init();
@@ -138,6 +149,7 @@ int main()
   {
     unsigned int start_time = SBDL::getTime();
     score_add();
+    add_power_up();
     handle_keyboard();
     handle_player_physics();
     move_coin();
