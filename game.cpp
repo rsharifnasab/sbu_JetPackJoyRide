@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 #include <exception>
-#include "SBDL.h"
-#include "consts.h"
-#include "player.h"
-#include "setting.h"
-#include "menu.h"
-#include "coin.h"
-#include "background.h"
+#include "headers/SBDL.h"
+#include "headers/consts.h"
+#include "headers/player.h"
+#include "headers/setting.h"
+#include "headers/menu.h"
+#include "headers/coin.h"
+#include "headers/background.h"
 
 
 
