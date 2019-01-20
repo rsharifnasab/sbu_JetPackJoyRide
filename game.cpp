@@ -98,8 +98,8 @@ bool show_game_texture()
 bool delay_handle(int start_time)
 {
     unsigned int delay_time = 1000 / FPS;
+    delay_time -= score/5; // make game harder
     unsigned int loop_time = SBDL::getTime() - start_time;
-
   	if ( loop_time < delay_time )
 		  SBDL::delay( delay_time - loop_time );
     return true;
@@ -127,7 +127,6 @@ bool play_sound(sound_type s)
 {
     if(!sound_state) return false;
     if (s == coin_s) SBDL::playSound(coin_sound,1);
-
     return true;
 }
 
