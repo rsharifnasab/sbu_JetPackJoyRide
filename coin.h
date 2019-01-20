@@ -12,7 +12,7 @@ struct coin_type
 const unsigned short int coins_width = 22;
 const unsigned short int coins_height = 10;
 coin_type coins[coins_height][coins_width];
-
+const unsigned int coins_series_delay = 0;
 const unsigned int coin_speed = 4;
 
 unsigned int coin_ate_number = 0;
@@ -35,9 +35,10 @@ bool set_coin_place()
   for(int i=0;i < coins_height; i++)
     for (int j = 0; j < coins_width; j++)
     {
-      coins[i][j].x = screen_width / coins_width * j + screen_width;
+      coins[i][j].x = screen_width / coins_width * (j+coins_series_delay) + screen_width;
       coins[i][j].y = screen_height / coins_height * i;
       coins[i][j].v = j%6;
+      coins[i][j].moving = true;
     }
 
   return true;
@@ -95,12 +96,30 @@ bool show_coin_texture()
   return true;
 }
 
+bool all_coin_out_check()
+{
+  bool is_coin = false;
+  for(int i=0;i < coins_height; i++)
+    for (int j = 0; j < coins_width; j++)
+      is_coin |= coins[i][j].moving;
+  return !is_coin;
+}
+
+bool restart_coins()
+{
+  set_coin_pattern();
+  set_coin_place();
+  return true;
+}
 bool move_coin()
 {
   for(int i=0;i < coins_height; i++)
     for (int j = 0; j < coins_width; j++)
+    {
       if(coins[i][j].moving) coins[i][j].x += game_vx;
-
+      if(coin_tex[coins[i][j].v].width + coins[i][j].x < 0) coins[i][j].moving = false;
+    }
+  if(all_coin_out_check()) restart_coins();
   return true;
 }
 bool coin_hit(coin_type& c)
