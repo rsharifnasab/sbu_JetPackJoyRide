@@ -21,30 +21,8 @@ int high_score=0;
 const unsigned int score_x = screen_width * 0.77;
 const unsigned int score_y = 0;
 
-enum { zapper , laser , } enemy;
-
-
+enum { Ezapper , Elaser , Ecoin } enemy;
 const int g =+1;
-const int jet_a = -g;
-
-enum suits { Smain, Sgreen, Sgravity };
-
-struct player
-{
-  Texture tex[3][4];
-  unsigned short this_tex = 3;
-  const int x = screen_height * 0.39;
-  int y = screen_height / 3;
-  int vy = 0;
-  int ay = g;
-  bool on_earth= false;
-  bool jet_on = false;
-  bool g_revers = false;
-  bool speed_token = false;
-  suits suit = Smain;
-};
-
-player barry;
 
 Music *game_music = NULL;
 Sound *coin_sound = NULL;

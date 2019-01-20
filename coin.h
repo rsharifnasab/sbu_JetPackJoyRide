@@ -1,5 +1,3 @@
-
-
 struct coin_type
 {
   bool moving = true;

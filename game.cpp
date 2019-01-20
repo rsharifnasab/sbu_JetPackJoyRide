@@ -2,8 +2,11 @@
 #include <exception>
 #include "SBDL.h"
 #include "consts.h"
+#include "player.h"
 #include "menu.h"
 #include "coin.h"
+#include "background.h"
+
 Texture background;
 
 bool init_high_score()
@@ -49,31 +52,7 @@ bool handle_keyboard()
 }
 
 
-bool load_background_texture() // TODO
-{
-  //background = SBDL::loadTexture( "assets/Background.png" );
-  return true;
-}
 
-bool load_player_texture()
-{
-  barry.tex[Smain][0] = SBDL::loadTexture( "./assets/pic/barry/barry.png" );
-  barry.tex[Smain][1] = SBDL::loadTexture( "./assets/pic/barry/barry2.png" );
-  barry.tex[Smain][2] = SBDL::loadTexture( "./assets/pic/barry/barry3.png" );
-  barry.tex[Smain][3] = SBDL::loadTexture( "./assets/pic/barry/barryst.png" );
-
-  barry.tex[Sgreen][0] = SBDL::loadTexture( "./assets/pic/barry/alien.png" );
-  barry.tex[Sgreen][1] = SBDL::loadTexture( "./assets/pic/barry/alien2.png" );
-  barry.tex[Sgreen][2] = SBDL::loadTexture( "./assets/pic/barry/alienup.png" );
-  barry.tex[Sgreen][3] = SBDL::loadTexture( "./assets/pic/barry/aliendown.png" );
-
-  barry.tex[Sgravity][0] = SBDL::loadTexture( "./assets/pic/barry/gg1.png" );
-  barry.tex[Sgravity][1] = SBDL::loadTexture( "./assets/pic/barry/gg2.png" );
-  barry.tex[Sgravity][2] = SBDL::loadTexture( "./assets/pic/barry/gg3.png" );
-  barry.tex[Sgravity][3] = SBDL::loadTexture( "./assets/pic/barry/gg4.png" );
-
-  return true;
-}
 bool load_game_texture()
 {
   load_background_texture();
@@ -95,30 +74,6 @@ bool init()
 
   return true;
 }
-
-
-bool show_background()
-{
-
-    return true;
-}
-
-bool show_player()
-{
-  static unsigned int counter = 0;
-  counter = (counter+1) % run_speed;
-  barry.this_tex = counter >= run_speed/2 ;
-  if(barry.suit != Sgravity)
-  {
-    if(!barry.on_earth && barry.jet_on) barry.this_tex = 2;
-    if(!barry.on_earth && !barry.jet_on) barry.this_tex = 3;
-  }
-  else
-    barry.this_tex += 2*barry.g_revers;
-  SBDL::showTexture( barry.tex[barry.suit][barry.this_tex], barry.x ,  barry.y );
-  return true;
-}
-
 
 bool show_game_texture()
 {
@@ -162,7 +117,6 @@ bool score_add()
   return true;
 }
 
-
 bool play_sound(sound_type s)
 {
     if(!sound_state) return false;
@@ -170,30 +124,6 @@ bool play_sound(sound_type s)
 
     return true;
 }
-
-bool handle_physics()
-{
-  if(barry.jet_on)
-  {
-    if(barry.vy >0 ) barry.vy = 0;
-    barry.ay = jet_a;
-    if( barry.y <=0 ) barry.vy = 0;
-  }
-  else barry.ay = g + (-2 * g * barry.g_revers);
-  barry.vy+=barry.ay;
-  barry.y+=barry.vy;
-  if(barry.y < 0) { barry.y = 0; barry.vy=0; }
-  if(barry.y + barry.tex[barry.suit][barry.this_tex].height > screen_height)
-  {
-    barry.y = screen_height - barry.tex[barry.suit][barry.this_tex].height;
-    barry.vy=0;
-    barry.on_earth = true;
-  }
-  else  barry.on_earth = false;
-
-  return true;
-}
-
 
 int main()
 {
@@ -204,7 +134,7 @@ int main()
     unsigned int start_time = SBDL::getTime();
     score_add();
     handle_keyboard();
-    handle_physics();
+    handle_player_physics();
     move_coin();
     coin_hit_check();
     show_game_texture();
