@@ -91,6 +91,7 @@ bool init()
   init_music();
   load_game_texture();
   set_coin_place();
+  set_coin_pattern();
 
   return true;
 }
