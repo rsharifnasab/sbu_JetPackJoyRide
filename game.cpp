@@ -125,7 +125,7 @@ bool show_game_texture()
   show_background();
   show_coin_texture();
   show_player();
-  
+
 	Texture score_tex = SBDL::createFontTexture(score_font ,"distance:"+std::to_string(score)+" HIGHEST:"+std::to_string(high_score),30,220,50);
   SBDL::showTexture( score_tex , score_x , score_y);
 
