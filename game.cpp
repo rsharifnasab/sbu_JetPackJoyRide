@@ -163,7 +163,6 @@ bool score_add()
 }
 
 
-
 bool play_sound(sound_type s)
 {
     if(!sound_state) return false;
@@ -171,7 +170,6 @@ bool play_sound(sound_type s)
 
     return true;
 }
-
 
 bool handle_physics()
 {

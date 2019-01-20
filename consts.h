@@ -2,7 +2,7 @@ const unsigned int FPS = 35;
 const int screen_width = 1500;
 const int screen_height = 800;
 
-const int game_x = 20;
+const int game_vx = -20;
 const unsigned int run_speed =12;
 const unsigned int score_rate = 50;
 

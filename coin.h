@@ -2,7 +2,7 @@
 
 struct coin_type
 {
-  bool move = false;
+  bool moving = true;
   bool show = false;
   unsigned short int v  = 0;
   int x = screen_width;
@@ -15,9 +15,10 @@ coin_type coins[coins_height][coins_width];
 
 const unsigned int coin_speed = 4;
 
-int coin_ate_number = 0;
+unsigned int coin_ate_number = 0;
 
 Texture coin_tex[6];
+
 bool load_coin_texture()
 {
   coin_tex[0]= SBDL::loadTexture( "./assets/pic/coin/1.png" );
@@ -34,7 +35,7 @@ bool set_coin_place()
   for(int i=0;i < coins_height; i++)
     for (int j = 0; j < coins_width; j++)
     {
-      coins[i][j].x = screen_width / coins_width * j;
+      coins[i][j].x = screen_width / coins_width * j + screen_width;
       coins[i][j].y = screen_height / coins_height * i;
       coins[i][j].v = j%6;
     }
@@ -96,9 +97,20 @@ bool show_coin_texture()
 
 bool move_coin()
 {
+  for(int i=0;i < coins_height; i++)
+    for (int j = 0; j < coins_width; j++)
+      if(coins[i][j].moving) coins[i][j].x += game_vx;
 
   return true;
 }
+bool coin_hit(coin_type& c)
+{
+  c.show = false;
+  coin_ate_number++;
+  if(sound_state) SBDL::playSound(coin_sound,1);
+  return true;
+}
+
 bool coin_hit_check()
 {
   SDL_Rect barry_rect =
@@ -113,11 +125,7 @@ bool coin_hit_check()
     {
       SDL_Rect coin_rect = {coins[i][j].x,coins[i][j].y,coin_tex[coins[i][j].v].width,coin_tex[coins[i][j].v].height};
       if ( SBDL::hasIntersectionRect(barry_rect,coin_rect)&& coins[i][j].show)
-      {
-        coins[i][j].show = false;
-        coin_ate_number++;
-        if(sound_state) SBDL::playSound(coin_sound,1);
-      }
+        coin_hit(coins[i][j]);
     }
   return true;
 }
