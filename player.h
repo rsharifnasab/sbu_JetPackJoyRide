@@ -14,7 +14,7 @@ struct player
   bool jet_on = false;
   bool g_revers = false;
   bool speed_token = false;
-  suits suit = Smain;
+  suits suit = Sgravity;
 };
 
 player barry;

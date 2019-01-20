@@ -14,7 +14,7 @@ bool load_paral()
 
   parals[back][1]= SBDL::loadTexture( "./assets/pic/parallex/Second P2.png" );
   parals[back][1]= SBDL::loadTexture( "./assets/pic/parallex/Second P2.png" );
-
+          
   return true;
 }
 
