@@ -30,14 +30,13 @@ bool load_setting_textures()
   no_sound_texture = SBDL::loadTexture( "assets/pic/menu/sound off.png" );
   sound_rect = { 0 , screen_height - sound_texture.height , sound_texture.width, sound_texture.height};
 
+  suit_texture = SBDL::loadTexture( "./assets/pic/menu/change keys.png" );
+  suit_rect = {suit_texture.width,screen_height - suit_texture.height ,suit_texture.width,suit_texture.height};
+
   back_texture = SBDL::loadTexture( "./assets/pic/menu/back.png" );
   back_rect = {screen_width-back_texture.width, screen_height-back_texture.height,back_texture.width,back_texture.height};
 
-  suit_texture = SBDL::loadTexture( "./assets/pic/menu/change keys.png" );
-  suit_rect = {screen_width-suit_texture.width,suit_texture.height ,suit_texture.width,suit_texture.height};
 
-  //Font * menu_score_font = SBDL::loadFont("assets/Font/gobold.ttf",35);
-  //menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   return true;
 }
 
@@ -49,6 +48,13 @@ bool change_music()
     return true;
 }
 
+bool change_suit()
+{
+  std::cout << "suit chenged\n";
+  barry.last_suit = (barry.last_suit==Smain)? Sgreen:Smain;
+  if(barry.suit != Sgravity) barry.suit =  barry.last_suit;
+  return true;
+}
 
 bool setting()
 {
@@ -62,7 +68,7 @@ bool setting()
     {
       if ( SBDL::mouseInRect( back_rect ) ) return true;
       if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
-  //    if ( SBDL::mouseInRect( music_rect ) ) change_music();
+      if ( SBDL::mouseInRect( suit_rect ) ) change_suit();
     }
     show_setting_textures();
     SBDL::delay(1000/FPS);

@@ -18,6 +18,7 @@ std::string Game_Over = "Game Over";
 Font * score_font = NULL;
 int score = 0;
 int high_score=0;
+unsigned int coin_ate_number = 0;
 const unsigned int score_x = screen_width * 0.77;
 const unsigned int score_y = 0;
 

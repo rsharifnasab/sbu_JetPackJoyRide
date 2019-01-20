@@ -13,8 +13,6 @@ coin_type coins[coins_height][coins_width];
 const unsigned int coins_series_delay = 0;
 const unsigned int coin_speed = 4;
 
-unsigned int coin_ate_number = 0;
-
 Texture coin_tex[6];
 
 bool load_coin_texture()
