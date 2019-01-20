@@ -8,7 +8,7 @@ const unsigned int score_rate = 50;
 
 const unsigned short int harder = 5;
 
-bool music_state = true;
+bool music_state = false;
 bool sound_state = true;
 
 int icon_size = 60;
@@ -47,5 +47,5 @@ struct player
 player barry;
 
 Music *game_music = NULL;
-Sound *score_sound = NULL;
+Sound *coin_sound = NULL;
 enum sound_type { coin_s, die1_s, die2_s };

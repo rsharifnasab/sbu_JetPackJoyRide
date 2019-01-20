@@ -25,7 +25,7 @@ bool init_music()
 {
   game_music = SBDL::loadMusic("./assets/sound/music.mp3");
   if(music_state) SBDL::playMusic(game_music, -1);
-  //  score_sound = SBDL::loadSound("assets/Sounds/score.wav");
+  coin_sound = SBDL::loadSound("./assets/sound/coin.wav");
   //  die1_sound = SBDL::loadSound("assets/Sounds/die1.wav");
   //  die2_sound = SBDL::loadSound("assets/Sounds/die2.wav");
   return true;
@@ -163,16 +163,15 @@ bool score_add()
 }
 
 
-/*
+
 bool play_sound(sound_type s)
 {
     if(!sound_state) return false;
-    if (s == score_s) SBDL::playSound(score_sound,1);
-    if (s == die1_s) SBDL::playSound(die1_sound,1);
-    if (s == die2_s) SBDL::playSound(die2_sound,1);
+    if (s == coin_s) SBDL::playSound(coin_sound,1);
+
     return true;
 }
-*/
+
 
 bool handle_physics()
 {
@@ -206,10 +205,10 @@ int main()
   {
     unsigned int start_time = SBDL::getTime();
     score_add();
-
     handle_keyboard();
-
     handle_physics();
+    move_coin();
+    coin_hit_check();
     show_game_texture();
     SBDL::updateRenderScreen();
     delay_handle(start_time);

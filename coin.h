@@ -15,6 +15,8 @@ coin_type coins[coins_height][coins_width];
 
 const unsigned int coin_speed = 4;
 
+int coin_ate_number = 0;
+
 Texture coin_tex[6];
 bool load_coin_texture()
 {
@@ -79,6 +81,7 @@ bool coin_turn_handle()
        for (int j = 0; j < coins_width; j++)
            if( (i + j+2*counter) % 6 == j_r)coins[i][j].v = (coins[i][j].v+1) % 6 ;
   }
+  return true;
 }
 
 bool show_coin_texture()
@@ -86,8 +89,35 @@ bool show_coin_texture()
   coin_turn_handle();
   for(int i=0;i < coins_height; i++)
     for (int j = 0; j < coins_width; j++)
+      if(coins[i][j].show)SBDL::showTexture(coin_tex[coins[i][j].v],coins[i][j].x ,coins[i][j].y );
+
+  return true;
+}
+
+bool move_coin()
+{
+
+  return true;
+}
+bool coin_hit_check()
+{
+  SDL_Rect barry_rect =
+  {
+    barry.x , barry.y ,
+    barry.tex[barry.suit][barry.this_tex].width,
+    barry.tex[barry.suit][barry.this_tex].height
+  };
+
+  for(int i=0;i < coins_height; i++)
+    for (int j = 0; j < coins_width; j++)
     {
-      if(coins[i][j].show)SBDL::showTexture( coin_tex[coins[i][j].v],coins[i][j].x ,coins[i][j].y );
+      SDL_Rect coin_rect = {coins[i][j].x,coins[i][j].y,coin_tex[coins[i][j].v].width,coin_tex[coins[i][j].v].height};
+      if ( SBDL::hasIntersectionRect(barry_rect,coin_rect)&& coins[i][j].show)
+      {
+        coins[i][j].show = false;
+        coin_ate_number++;
+        if(sound_state) SBDL::playSound(coin_sound,1);
+      }
     }
   return true;
 }
