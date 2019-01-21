@@ -3,6 +3,7 @@ enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
 
 const unsigned int enemy_rate = 150;
 const unsigned int enemy_len = 1200;
+unsigned long int frame_counter=0;
 
 struct
 {
@@ -67,6 +68,7 @@ bool add_enemy()
   timer++;
   if(timer > enemy_rate)
   {
+    frame_counter=0;
     timer-=enemy_rate;
     enemy.type = enemy_type_rand();
     enemy.x = screen_width;
@@ -102,6 +104,7 @@ bool enemy_hit_check()
 //um enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
 bool enemy_counter()
 {
+  frame_counter++;
   if(enemy.type == EzapperN);
   if(enemy.type == EzapperN);
   if(enemy.type == Elaser);
