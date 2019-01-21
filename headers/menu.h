@@ -60,7 +60,7 @@ bool menu(std::string text_title = main_windows_title)
   while( SBDL::isRunning() )
   {
     SBDL::updateEvents();
-    if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(text_title); return true;}
+    //  if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(text_title); return true;}
     if (SBDL::Mouse.clicked())
     {
       if ( SBDL::mouseInRect( menu_play_rect ) ) {new_game(text_title); return true;}

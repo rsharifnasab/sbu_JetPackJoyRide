@@ -8,6 +8,7 @@
 #include "headers/coin.h"
 #include "headers/background.h"
 #include "headers/powerup.h"
+#include "headers/die.h"
 #include "headers/enemy.h"
 
 
@@ -60,6 +61,7 @@ bool load_game_texture()
   load_background_texture();
   load_player_texture();
   load_coin_texture();
+  load_enemy_texture();
   score_font = SBDL::loadFont("assets/font/Jetpackia.ttf",27);
   return true;
 }
@@ -102,7 +104,8 @@ bool delay_handle(int start_time)
 {
     unsigned int delay_time = 1000 / FPS;
     if(barry.speed_token) delay_time/=speed_token_speed; //decrease delay have sped token
-    else if(delay_time>min_delay)delay_time -= (score/harder); // make game harder
+    else delay_time -= (score/harder); // make game harder
+    if(delay_time>min_delay) delay_time = min_delay;
     unsigned int loop_time = SBDL::getTime() - start_time;
   	if ( loop_time < delay_time )
 		  SBDL::delay( delay_time - loop_time );
