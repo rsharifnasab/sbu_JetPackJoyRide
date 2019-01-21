@@ -8,8 +8,9 @@
 #include "headers/coin.h"
 #include "headers/background.h"
 #include "headers/powerup.h"
-#include "headers/die.h"
 #include "headers/enemy.h"
+#include "headers/die.h"
+
 
 
 bool init_high_score()

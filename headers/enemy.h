@@ -1,3 +1,4 @@
+bool die();
 enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
 
 const unsigned int enemy_rate = 150;
@@ -6,6 +7,7 @@ const unsigned int enemy_len = 1200;
 struct
 {
   Texture tex[5][4];
+  unsigned short int this_tex = 0;
   enemy_types type = Ecoin;
   int y = 0.3 * screen_height;
   int x = screen_width;
@@ -39,25 +41,28 @@ bool load_enemy_texture()
 
 int enemy_y_gen()
 {
-  if(enemy.type == Emissle) return (barry.y - (rand()%50));
-  if(enemy.type == Elaser) return (screen_height/10 * rand()%10);
-  if(enemy.type == EzapperN) return (screen_height/10 * rand()%10);
-  if(enemy.type == EzapperV) return (screen_height/10 * rand()%6);
-
+  if(enemy.type == Emissle) return (barry.y+100 - (rand()%250));
+  else if(enemy.type == Elaser) return (screen_height/10 * rand()%10);
+  else if(enemy.type == EzapperN) return (screen_height/10 * rand()%10);
+  else if(enemy.type == EzapperV) return (screen_height/10 * rand()%6);
+  else return 0;
 }
 
 enemy_types enemy_type_rand()
 {
   //enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
   int a = rand()%4;
-  a=2; // TODO
+  //a=2;
   std::cout << "enemy " << a << " is coming \n";
-  return static_cast<enemy_types>(a);
+  if(a==0) return EzapperV;
+  else if(a==1) return EzapperN;
+  else if(a==2) return Elaser;
+  else if(a==3) return Emissle;
+  else return Ecoin;
 }
 
 bool add_enemy()
 {
-
   static unsigned int timer = 0;
   timer++;
   if(timer > enemy_rate)
@@ -90,11 +95,8 @@ bool enemy_hit_check()
 
   SDL_Rect enemy_rect = { enemy.x, enemy.y,enemy.tex[enemy.type][0].width,enemy.tex[enemy.type][0].height};
   if (SBDL::hasIntersectionRect(barry_rect,enemy_rect))
-  {
-    enemy.x = -1000;
-    enemy.type =Ecoin;
     die();
-  }
+
   return true;
 }
 //um enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
