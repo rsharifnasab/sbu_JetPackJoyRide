@@ -1,5 +1,4 @@
 sound effect for laser and zapper and etc  - 5
-gravity and speed token - 5
 zaper - 6 
 laser - 5
 missile  - 7
