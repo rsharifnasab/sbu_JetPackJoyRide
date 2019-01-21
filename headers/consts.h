@@ -6,10 +6,9 @@ const int game_vx = -16;
 const unsigned int run_speed =12;
 const unsigned int score_rate = 50;
 const unsigned int min_delay = 20;
-
 const unsigned short int harder = 5;
 
-bool music_state = false;
+bool music_state = true;
 bool sound_state = true;
 
 int icon_size = 60;

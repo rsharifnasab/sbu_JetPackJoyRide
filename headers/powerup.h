@@ -24,7 +24,7 @@ bool add_power_up()
 {
   if(power_up.type != Pnone) return false;
   if(barry.suit==Sgravity) return false;
-  if (barry.speedtoken) return false;
+  if (barry.speed_token) return false;
 
   static unsigned int timer = 0;
   timer++;

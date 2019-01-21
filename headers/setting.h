@@ -9,7 +9,7 @@ bool show_setting_textures()
 {
   SBDL::clearRenderScreen();
 
-  SBDL::showTexture(setting_background , 0 , 0 );
+  SBDL::showTexture(setting_background ,0.1 * screen_width , -10 );
 
   SBDL::showTexture(back_texture, screen_width-back_texture.width, screen_height-back_texture.height);
   SBDL::showTexture(suit_texture,suit_texture.width, screen_height - suit_texture.height);
@@ -24,7 +24,7 @@ bool show_setting_textures()
 
 bool load_setting_textures()
 {
-  setting_background = SBDL::loadTexture( "./assets/pic/menu/EBack.png" );
+  setting_background = SBDL::loadTexture( "./assets/pic/menu/pauseb.png" );
 
   sound_texture = SBDL::loadTexture( "assets/pic/menu/sound on.png" );
   no_sound_texture = SBDL::loadTexture( "assets/pic/menu/sound off.png" );
@@ -45,6 +45,7 @@ bool change_music()
     if (music_state) SBDL::stopMusic();
     else SBDL::playMusic(game_music, -1);
     music_state = !music_state;
+    sound_state = !sound_state;
     return true;
 }
 
@@ -67,7 +68,7 @@ bool setting()
     if (SBDL::Mouse.clicked())
     {
       if ( SBDL::mouseInRect( back_rect ) ) return true;
-      if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
+      if ( SBDL::mouseInRect( sound_rect ) ) change_music();
       if ( SBDL::mouseInRect( suit_rect ) ) change_suit();
     }
     show_setting_textures();
