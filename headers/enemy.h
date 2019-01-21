@@ -1,8 +1,8 @@
 bool die();
 enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
 
-const unsigned int enemy_rate = 150;
-const unsigned int enemy_len = 1200;
+const unsigned int enemy_rate = 250;
+const unsigned int enemy_len = 240;
 unsigned long int frame_counter=0;
 
 struct
@@ -40,13 +40,13 @@ bool load_enemy_texture()
   return true;
 }
 
-int enemy_y_gen()
+int enemy_y_gen() //TODO
 {
   if(enemy.type == Emissle) return (barry.y+100 - (rand()%250));
-  else if(enemy.type == Elaser) return (screen_height/10 * rand()%10);
-  else if(enemy.type == EzapperN) return (screen_height/10 * rand()%10);
   else if(enemy.type == EzapperV) return (screen_height/10 * rand()%6);
-  else return 0;
+  else return (screen_height/10 * rand()%10);
+
+  return 0;
 }
 
 enemy_types enemy_type_rand()
@@ -81,7 +81,7 @@ bool move_enemy()
 {
   if(enemy.type == Ecoin) return false;
   if(enemy.type==Elaser) {enemy.x=1; return true;}
-  if(enemy.x + enemy.tex[enemy.type][0].width < 0) {enemy.type = Ecoin;return false;}
+  if(enemy.x + enemy.tex[enemy.type][enemy.this_tex].width < 0) {enemy.type = Ecoin;return false;}
   enemy.x += game_vx* (1 + 0.3*(enemy.type==Emissle));
   return true;
 }
@@ -95,7 +95,7 @@ bool enemy_hit_check()
     barry.tex[barry.suit][barry.this_tex].height
   };
 
-  SDL_Rect enemy_rect = { enemy.x, enemy.y,enemy.tex[enemy.type][0].width,enemy.tex[enemy.type][0].height};
+  SDL_Rect enemy_rect = { enemy.x, enemy.y,enemy.tex[enemy.type][enemy.this_tex].width,enemy.tex[enemy.type][enemy.this_tex].height};
   if (SBDL::hasIntersectionRect(barry_rect,enemy_rect))
     die();
 
@@ -104,21 +104,38 @@ bool enemy_hit_check()
 //um enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
 bool enemy_counter()
 {
+  static int s=0;
   frame_counter++;
-  if(enemy.type == EzapperN);
-  if(enemy.type == EzapperN);
-  if(enemy.type == Elaser);
-  if(enemy.type == Emissle);
-  if(enemy.type == Ecoin);
+  if(enemy.type == EzapperN || enemy.type ==  EzapperV || enemy.type == Emissle)
+  {
+    if(frame_counter>run_speed)
+    {
+      enemy.this_tex = (enemy.this_tex+1)%4;
+      frame_counter-=run_speed;
+    }
+  }
+  else if(enemy.type == Elaser)
+  {
+    if(frame_counter<enemy_len/4) enemy.this_tex = 0;
+    else if(frame_counter>enemy_len)
+    {
+      enemy.x = -1000;
+      enemy.type =Ecoin;
+    }
+    else if(frame_counter-(s*run_speed) >run_speed)
+    {
+       enemy.this_tex = enemy.this_tex+1; //3 or 2
+       if(enemy.this_tex >3) enemy.this_tex = 2;
+       s++;
+    }
+  }
 
-  static unsigned int x = 0;
-  x++;
   return true;
 }
 
 bool show_enemy()
 {
-  SBDL::showTexture(enemy.tex[enemy.type][0] ,enemy.x ,enemy.y);
+  SBDL::showTexture(enemy.tex[enemy.type][enemy.this_tex] ,enemy.x ,enemy.y);
   return true;
 }
 
