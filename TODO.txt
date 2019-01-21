@@ -2,3 +2,5 @@ sound effect for laser and zapper and etc  - 5
 restart - 1
 pay coin for continue - 4
 paral background - 6
+missle warning
+
