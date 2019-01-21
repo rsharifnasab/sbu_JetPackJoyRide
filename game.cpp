@@ -8,6 +8,7 @@
 #include "headers/coin.h"
 #include "headers/background.h"
 #include "headers/powerup.h"
+#include "headers/enemy.h"
 
 
 bool init_high_score()
@@ -89,6 +90,7 @@ bool show_game_texture()
   SBDL::clearRenderScreen();
   show_background();
   show_coin_texture();
+  show_enemy();
   show_power_up();
   show_player();
   show_score();
@@ -145,6 +147,7 @@ int main()
     handle_player_physics();
     coin_handle();
     power_up_handle();
+    enemy_handle();
     show_game_texture();
     SBDL::updateRenderScreen();
     delay_handle(start_time);

@@ -22,9 +22,8 @@ unsigned int coin_ate_number = 0;
 const unsigned int score_x = screen_width * 0.77;
 const unsigned int score_y = 0;
 
-enum { Ezapper , Elaser , Ecoin } enemy;
 const int g =+1;
 
 Music *game_music = NULL;
 Sound *coin_sound = NULL;
-enum sound_type { coin_s, die1_s, die2_s };
+enum sound_type { coin_s, die1_s, die2_s }; //todo
