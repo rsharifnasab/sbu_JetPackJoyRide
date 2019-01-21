@@ -49,7 +49,9 @@ int enemy_y_gen()
 enemy_types enemy_type_rand()
 {
   //enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
-  int a = rand()%5;
+  int a = rand()%4;
+  a=2; // TODO
+  std::cout << "enemy " << a << " is coming \n";
   return static_cast<enemy_types>(a);
 }
 
@@ -64,17 +66,16 @@ bool add_enemy()
     enemy.type = enemy_type_rand();
     enemy.x = screen_width;
     enemy.y = enemy_y_gen();
-    if(power_up.type == Pspeed)power_up.tex = SBDL::loadTexture("./assets/pic/speedToken/speed token.png");
-    if(power_up.type == Pgravity)power_up.tex = SBDL::loadTexture("./assets/pic/menu/gravity_token.png");
   }
   return true;
 }
 
 bool move_enemy()
 {
-  if(enemy.type==Elaser || enemy.type == Ecoin) return false;
+  if(enemy.type == Ecoin) return false;
+  if(enemy.type==Elaser) {enemy.x=1; return true;}
   if(enemy.x + enemy.tex[enemy.type][0].width < 0) {enemy.type = Ecoin;return false;}
-  enemy.x += game_vx* (1 + (enemy.type==Emissle));
+  enemy.x += game_vx* (1 + 0.3*(enemy.type==Emissle));
   return true;
 }
 
