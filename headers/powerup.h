@@ -22,8 +22,11 @@ power_ups powerup_rand()
 
 bool add_power_up()
 {
-  static unsigned int timer = 0;
   if(power_up.type != Pnone) return false;
+  if(barry.suit==Sgravity) return false;
+  if (barry.speedtoken) return false;
+
+  static unsigned int timer = 0;
   timer++;
   if(timer > powerup_rate)
   {
