@@ -153,3 +153,10 @@ bool coin_hit_check()
     }
   return true;
 }
+
+bool coin_handle()
+{
+  move_coin();
+  coin_hit_check();
+  return true;
+}

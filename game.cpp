@@ -7,7 +7,7 @@
 #include "headers/menu.h"
 #include "headers/coin.h"
 #include "headers/background.h"
-
+#include "headers/powerup.h"
 
 
 bool init_high_score()
@@ -89,6 +89,7 @@ bool show_game_texture()
   SBDL::clearRenderScreen();
   show_background();
   show_coin_texture();
+  show_power_up();
   show_player();
   show_score();
   SBDL::updateRenderScreen();
@@ -98,7 +99,8 @@ bool show_game_texture()
 bool delay_handle(int start_time)
 {
     unsigned int delay_time = 1000 / FPS;
-    delay_time -= score/5; // make game harder
+    if(barry.speed_token) delay_time/=speed_token_speed; //decrease delay have sped token
+    else if(delay_time>min_delay)delay_time -= (score/harder); // make game harder
     unsigned int loop_time = SBDL::getTime() - start_time;
   	if ( loop_time < delay_time )
 		  SBDL::delay( delay_time - loop_time );
@@ -130,16 +132,6 @@ bool play_sound(sound_type s)
     return true;
 }
 
-bool add_power_up() // TODO
-{
-
-
-
-  return true;
-}
-
-
-
 
 int main()
 {
@@ -149,14 +141,13 @@ int main()
   {
     unsigned int start_time = SBDL::getTime();
     score_add();
-    add_power_up();
     handle_keyboard();
     handle_player_physics();
-    move_coin();
-    coin_hit_check();
+    coin_handle();
+    power_up_handle();
     show_game_texture();
     SBDL::updateRenderScreen();
     delay_handle(start_time);
-}
+  }
   return 0;
 }
