@@ -23,22 +23,22 @@ power_ups powerup_rand()
 bool add_power_up()
 {
   static unsigned int timer = 0;
+  if(power_up.type != Pnone) return false;
   timer++;
-  if(power_up.type == Pnone)
-    if(timer > powerup_rate)
-    {
-      timer-=powerup_rate;
-      power_up.x = screen_width;
-      power_up.y = screen_height * (0.1 + (rand()%8)/10);
-      power_up.type = powerup_rand();
-      if(power_up.type == Pspeed)power_up.tex = SBDL::loadTexture("./assets/pic/speedToken/speed token.png");
-      if(power_up.type == Pgravity)power_up.tex = SBDL::loadTexture("./assets/pic/menu/gravity_token.png");
-    }
+  if(timer > powerup_rate)
+  {
+    timer-=powerup_rate;
+    power_up.x = screen_width;
+    power_up.y = screen_height * (0.1 + (rand()%8)/10);
+    power_up.type = powerup_rand();
+    if(power_up.type == Pspeed)power_up.tex = SBDL::loadTexture("./assets/pic/speedToken/speed token.png");
+    if(power_up.type == Pgravity)power_up.tex = SBDL::loadTexture("./assets/pic/menu/gravity_token.png");
+  }
   return true;
 }
 bool move_powerup()
 {
-  if(power_up.x + power_up.tex.width < 0) return false;
+  if(power_up.x + power_up.tex.width < 0) {power_up.type = Pnone;return false;}
   power_up.x += game_vx;
   return true;
 }
@@ -57,7 +57,7 @@ bool power_up_hit_check()
   {
     if(power_up.type == Pgravity) barry.suit = Sgravity;
     if(power_up.type == Pspeed) barry.speed_token = true;
-    power_up.x=-1; // out of screen;
+    power_up.x=-1000; // out of screen;
   }
   return true;
 }
@@ -66,7 +66,7 @@ bool speed_token_counter()
   if(!barry.speed_token) return false;
   static unsigned int x = 0;
   x++;
-  if (x > speed_token_len) {barry.speed_token = false; x= 0;}
+  if (x > speed_token_len) {barry.speed_token = false; x= 0; power_up.type=Pnone;}
   return true;
 }
 
