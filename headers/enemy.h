@@ -43,8 +43,8 @@ bool load_enemy_texture()
 int enemy_y_gen() //TODO
 {
   if(enemy.type == Emissle) return (barry.y+100 - (rand()%250));
-  else if(enemy.type == EzapperV) return (screen_height/10 * rand()%6);
-  else return (screen_height/10 * rand()%10);
+  else if(enemy.type == EzapperV) return (screen_height/10 * (rand()%8));
+  else return (screen_height/10 * (rand()%10));
 
   return 0;
 }
