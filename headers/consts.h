@@ -5,11 +5,11 @@ const int screen_height = 461;
 const int game_vx = -16;
 const unsigned int run_speed =12;
 const unsigned int score_rate = 50;
-const unsigned int min_delay = 40;
+const unsigned int min_delay = 10;
 const unsigned short int harder = 5;
 
 bool music_state = !true;
-bool sound_state = !true; //TODO
+bool sound_state = true; //TODO
 
 int icon_size = 60;
 std::string main_windows_title = "welcome to JetPack JoyRide :)";
@@ -26,4 +26,13 @@ const int g =+1;
 
 Music *game_music = NULL;
 Sound *coin_sound = NULL;
-enum sound_type { coin_s, die1_s, die2_s }; //todo
+Sound *change_barry_sound = NULL;
+Sound *grav1_sound = NULL;
+Sound *grav2_sound = NULL;
+Sound *on_sound = NULL;
+Sound *missle_warning_sound = NULL;
+Sound *laser_warning_sound = NULL;
+
+enum sound_type { coin_s, change_barry_s,
+    grav1_s , grav2_s, on_s ,
+    missle_warning_s , laser_warning_s}; //todo

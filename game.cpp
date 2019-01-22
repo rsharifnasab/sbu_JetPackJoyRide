@@ -3,6 +3,7 @@
 #include "headers/SBDL.h"
 #include "headers/consts.h"
 #include "headers/player.h"
+#include "headers/sounds.h"
 #include "headers/setting.h"
 #include "headers/menu.h"
 #include "headers/coin.h"
@@ -27,17 +28,6 @@ bool init_high_score()
   return true;
 }
 
-
-bool init_music()
-{
-  game_music = SBDL::loadMusic("./assets/sound/music.mp3");
-  if(music_state) SBDL::playMusic(game_music, -1);
-  coin_sound = SBDL::loadSound("./assets/sound/coin.wav");
-  //  die1_sound = SBDL::loadSound("assets/Sounds/die1.wav");
-  //  die2_sound = SBDL::loadSound("assets/Sounds/die2.wav");
-  return true;
-}
-
 bool handle_keyboard()
 {
   SBDL::updateEvents();
@@ -48,6 +38,7 @@ bool handle_keyboard()
 
   if (SBDL::keyPressed(SDL_SCANCODE_SPACE) && barry.suit==Sgravity)
   {
+    play_sound(static_cast<sound_type>(2+barry.g_revers));
     barry.g_revers=!barry.g_revers;
     barry.vy = 0.3 * barry.vy;
   }
@@ -106,7 +97,7 @@ bool delay_handle(int start_time)
     unsigned int delay_time = 1000 / FPS;
     if(barry.speed_token) delay_time/=speed_token_speed; //decrease delay have sped token
     else delay_time -= (score/harder); // make game harder
-    if(delay_time>min_delay) delay_time = min_delay;
+    if(delay_time<min_delay) delay_time = min_delay;
     unsigned int loop_time = SBDL::getTime() - start_time;
   	if ( loop_time < delay_time )
 		  SBDL::delay( delay_time - loop_time );
@@ -130,14 +121,6 @@ bool score_add()
     }
   return true;
 }
-
-bool play_sound(sound_type s)
-{
-    if(!sound_state) return false;
-    if (s == coin_s) SBDL::playSound(coin_sound,1);
-    return true;
-}
-
 
 int main()
 {

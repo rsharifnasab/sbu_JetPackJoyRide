@@ -131,7 +131,7 @@ bool coin_hit(coin_type& c)
 {
   c.show = false;
   coin_ate_number++;
-  if(sound_state) SBDL::playSound(coin_sound,1);
+  play_sound(coin_s);
   return true;
 }
 

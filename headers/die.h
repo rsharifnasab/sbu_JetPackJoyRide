@@ -15,6 +15,7 @@ bool die()
   if(barry.suit==Sgravity)
   {
     barry.suit = barry.last_suit;
+    play_sound(static_cast<sound_type>(2+barry.g_revers));
     barry.g_revers = false;
     return true;
   }

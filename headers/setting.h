@@ -46,6 +46,7 @@ bool change_music()
     else SBDL::playMusic(game_music, -1);
     music_state = !music_state;
     sound_state = !sound_state;
+    play_sound(on_s);
     return true;
 }
 
@@ -54,6 +55,7 @@ bool change_suit()
   std::cout << "suit chenged\n";
   barry.last_suit = (barry.last_suit==Smain)? Sgreen:Smain;
   if(barry.suit != Sgravity) barry.suit =  barry.last_suit;
+  play_sound(change_barry_s);
   return true;
 }
 

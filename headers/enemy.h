@@ -1,8 +1,8 @@
 bool die();
 enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
 
-const unsigned int enemy_rate = 250;
-const unsigned int enemy_len = 240;
+const unsigned int enemy_rate = 150;
+const unsigned int enemy_len = 140;
 unsigned long int frame_counter=0;
 
 struct
@@ -66,13 +66,17 @@ bool add_enemy()
 {
   static unsigned int timer = 0;
   timer++;
-  if(timer > enemy_rate)
+  int enemy_rate_c =(enemy.type==Elaser) ? enemy_rate *5 : enemy_rate ;
+  enemy_rate_c = enemy_rate;
+  if(timer > enemy_rate_c)
   {
     frame_counter=0;
     timer-=enemy_rate;
     enemy.type = enemy_type_rand();
-    enemy.x = screen_width;
+    enemy.x = 1.5 * screen_width;
     enemy.y = enemy_y_gen();
+    if(enemy.type == Emissle) play_sound(missle_warning_s);
+    if(enemy.type == Elaser) play_sound(laser_warning_s);
   }
   return true;
 }
@@ -80,7 +84,7 @@ bool add_enemy()
 bool move_enemy()
 {
   if(enemy.type == Ecoin) return false;
-  if(enemy.type==Elaser) {enemy.x=1; return true;}
+  if(enemy.type==Elaser) {enemy.x=10; return true;}
   if(enemy.x + enemy.tex[enemy.type][enemy.this_tex].width < 0) {enemy.type = Ecoin;return false;}
   enemy.x += game_vx* (1 + 0.3*(enemy.type==Emissle));
   return true;
