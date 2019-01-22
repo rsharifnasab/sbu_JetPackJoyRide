@@ -6,6 +6,7 @@ Texture menu_back_tex,
 SDL_Rect menu_play_rect,menu_setting_rect;
 
 bool first_time= true;
+const int pay_continue = 50;
 
 bool show_menu_textures()
 {
@@ -28,7 +29,7 @@ bool load_menu_textures(std::string text_title)
   menu_back_tex = SBDL::loadTexture( "./assets/pic/menu/EBack.png" );
 
   Font * start_font = SBDL::loadFont("assets/font/smart_font_ui_japanese.otf",25);
-  menu_start_tex = SBDL::createFontTexture(start_font , "press SPACE to start", 20, 140, 133);
+  menu_start_tex = SBDL::createFontTexture(start_font , "press R to REstart", 20, 140, 133);
 
   menu_play_tex = SBDL::loadTexture( "./assets/pic/menu/play.png" );
   menu_play_rect = {screen_width-menu_play_tex.width, screen_height-menu_play_tex.height, menu_play_tex.width, menu_play_tex.height};
@@ -45,9 +46,16 @@ bool load_menu_textures(std::string text_title)
 
 bool new_game(std::string text_title)
 {
+  if (text_title == "Game Paused") return true;
+  if (text_title == "continue")
+  {
+    if(coin_ate_number > pay_continue ) coin_ate_number-=pay_continue;
+    else new_game(Game_Over);
+  }
   if(text_title != Game_Over) return false;
   score = 0;
   coin_ate_number = 0;
+  show_background(true);
   return true;
 }
 
@@ -60,7 +68,7 @@ bool menu(std::string text_title = main_windows_title)
   while( SBDL::isRunning() )
   {
     SBDL::updateEvents();
-    //  if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(text_title); return true;}
+    if (SBDL::keyHeld(SDL_SCANCODE_R)) {new_game("restart"); return true;}
     if (SBDL::Mouse.clicked())
     {
       if ( SBDL::mouseInRect( menu_play_rect ) ) {new_game(text_title); return true;}

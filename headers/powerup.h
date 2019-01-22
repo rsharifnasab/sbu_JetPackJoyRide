@@ -1,8 +1,8 @@
 
 enum power_ups {Pnone,Pgravity,Pspeed};
 const unsigned int powerup_rate = 500;
-const unsigned int speed_token_len = 1200;
-const unsigned int speed_token_speed = 5;
+const unsigned int speed_token_len = 700;
+const unsigned int speed_token_speed = 7;
 
 struct power_up_type
 {

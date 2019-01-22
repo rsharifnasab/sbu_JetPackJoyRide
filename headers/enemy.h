@@ -1,13 +1,13 @@
 bool die();
-enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
+enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin, EmissleW };
 
 const unsigned int enemy_rate = 150;
 const unsigned int enemy_len = 140;
 unsigned long int frame_counter=0;
-
+const unsigned int EMP = 20;
 struct
 {
-  Texture tex[5][4];
+  Texture tex[6][4];
   unsigned short int this_tex = 0;
   enemy_types type = Ecoin;
   int y = 0.3 * screen_height;
@@ -37,6 +37,9 @@ bool load_enemy_texture()
   enemy.tex[Emissle][1] = SBDL::loadTexture("./assets/pic/missle/missle (3).png");
   enemy.tex[Emissle][2] = SBDL::loadTexture("./assets/pic/missle/missle (4).png");
   enemy.tex[Emissle][3] = SBDL::loadTexture("./assets/pic/missle/missle (6).png");
+
+  enemy.tex[EmissleW][0] = SBDL::loadTexture("./assets/pic/missle/warn.png");
+
   return true;
 }
 
@@ -97,7 +100,10 @@ bool enemy_hit_check()
     barry.tex[barry.suit][barry.this_tex].height
   };
 
-  SDL_Rect enemy_rect = { enemy.x, enemy.y,enemy.tex[enemy.type][enemy.this_tex].width,enemy.tex[enemy.type][enemy.this_tex].height};
+  SDL_Rect enemy_rect = { enemy.x + EMP, enemy.y + EMP,
+    enemy.tex[enemy.type][enemy.this_tex].width - EMP
+    ,enemy.tex[enemy.type][enemy.this_tex].height - EMP};
+
   if (SBDL::hasIntersectionRect(barry_rect,enemy_rect))
     die();
 
@@ -138,6 +144,11 @@ bool enemy_counter()
 bool show_enemy()
 {
   SBDL::showTexture(enemy.tex[enemy.type][enemy.this_tex] ,enemy.x ,enemy.y);
+  if(enemy.type==Emissle && enemy.x > screen_width)
+    SBDL::showTexture
+    (enemy.tex[EmissleW][0],
+      screen_width-enemy.tex[EmissleW][0].width,
+      enemy.y);
   return true;
 }
 

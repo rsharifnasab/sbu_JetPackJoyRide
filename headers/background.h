@@ -37,9 +37,10 @@ bool load_background_texture()
 }
 
 
-bool show_background()
+bool show_background(bool restart =false)
 {
   static long int first_x = 0;
+  if(restart) first_x=0;
   first_x+=game_vx;
   long int came_x = 0;
   SBDL::showTexture(background[lab][start], first_x+came_x ,0);

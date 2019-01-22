@@ -5,9 +5,9 @@
 #include "headers/player.h"
 #include "headers/sounds.h"
 #include "headers/setting.h"
+#include "headers/background.h"
 #include "headers/menu.h"
 #include "headers/coin.h"
-#include "headers/background.h"
 #include "headers/powerup.h"
 #include "headers/enemy.h"
 #include "headers/die.h"
@@ -95,9 +95,9 @@ bool show_game_texture()
 bool delay_handle(int start_time)
 {
     unsigned int delay_time = 1000 / FPS;
-    if(barry.speed_token) delay_time/=speed_token_speed; //decrease delay have sped token
-    else delay_time -= (score/harder); // make game harder
+    delay_time -= (score/harder); // make game harder
     if(delay_time<min_delay) delay_time = min_delay;
+    if(barry.speed_token) delay_time/=speed_token_speed; //decrease delay have sped token
     unsigned int loop_time = SBDL::getTime() - start_time;
   	if ( loop_time < delay_time )
 		  SBDL::delay( delay_time - loop_time );
