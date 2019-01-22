@@ -1,9 +1,7 @@
-
-
 enum bg_steps {start,one,two};
 enum bs_types {lab,volca,paral};
 Texture background[3][3];
-
+/*
 enum paral_type {back,front};
 Texture parals[2][2];
 
@@ -17,7 +15,7 @@ bool load_paral()
 
   return true;
 }
-
+*/
 bool load_background_texture()
 {
   background[lab][start] = SBDL::loadTexture( "./assets/pic/back/Lab Start.png" );
@@ -32,7 +30,7 @@ bool load_background_texture()
   background[paral][one] = SBDL::loadTexture( "./assets/pic/back/warehouse.png" );
   background[paral][two] = SBDL::loadTexture( "./assets/pic/back/warehouse.png" );
 
-  load_paral();
+  //load_paral();
   return true;
 }
 
@@ -50,14 +48,12 @@ bool show_background(bool restart =false)
   SBDL::showTexture(background[lab][two], first_x+came_x ,0);
   came_x+=background[lab][two].width;
 
-
   SBDL::showTexture(background[volca][start], first_x+came_x ,0);
   came_x+=background[volca][start].width;
   SBDL::showTexture(background[volca][one], first_x+came_x ,0);
   came_x+=background[volca][one].width;
   SBDL::showTexture(background[volca][two], first_x+came_x ,0);
   came_x+=background[volca][two].width;
-
 
   SBDL::showTexture(background[paral][start], first_x+came_x ,0);
   came_x+=background[paral][start].width;
@@ -67,6 +63,6 @@ bool show_background(bool restart =false)
   came_x+=background[paral][two].width;
 
   SBDL::showTexture(background[lab][start], first_x+came_x ,0);
-  first_x %= (came_x) ;
+  first_x %= came_x;
   return true;
 }

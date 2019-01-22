@@ -1,6 +1,5 @@
 bool die();
 enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin, EmissleW };
-
 const unsigned int enemy_rate = 150;
 const unsigned int enemy_len = 140;
 unsigned long int frame_counter=0;
@@ -17,7 +16,6 @@ struct
 
 bool load_enemy_texture()
 {
-  //EzapperV ,EzapperN , Elaser ,Emissle
   enemy.tex[EzapperV][0] = SBDL::loadTexture("./assets/pic/zappers/v1.png");
   enemy.tex[EzapperV][1] = SBDL::loadTexture("./assets/pic/zappers/v2.png");
   enemy.tex[EzapperV][2] = SBDL::loadTexture("./assets/pic/zappers/v3.png");
@@ -47,8 +45,7 @@ int enemy_y_gen()
 {
   if(enemy.type == Emissle) return (barry.y+100 - (rand()%250));
   else if(enemy.type == EzapperV) return (screen_height/10 * (rand()%8));
-  else return (screen_height/10 * (rand()%10));
-
+  else return (screen_height/15 * (rand()%14));
   return 0;
 }
 
@@ -60,7 +57,7 @@ enemy_types enemy_type_rand()
   else if(a==1) return EzapperN;
   else if(a==2) return Elaser;
   else if(a==3) return Emissle;
-  else return Ecoin;
+  else return Ecoin; // not necesary but for avoiding warning
 }
 
 bool add_enemy()
@@ -72,7 +69,7 @@ bool add_enemy()
     frame_counter=0;
     timer-=enemy_rate;
     enemy.type = enemy_type_rand();
-    enemy.x = 1.5 * screen_width;
+    enemy.x = 1.5 * screen_width; // put it outside of screen for warning and etc
     enemy.y = enemy_y_gen();
     if(enemy.type == Emissle) play_sound(missle_warning_s);
     if(enemy.type == Elaser) play_sound(laser_warning_s);
@@ -85,7 +82,7 @@ bool move_enemy()
   if(enemy.type == Ecoin) return false;
   if(enemy.type==Elaser) {enemy.x=10; return true;}
   if(enemy.x + enemy.tex[enemy.type][enemy.this_tex].width < 0) {enemy.type = Ecoin;return false;}
-  enemy.x += game_vx* (1 + 0.3*(enemy.type==Emissle));
+  enemy.x += game_vx* (1 + 0.3*(enemy.type==Emissle)); // make missle faaster
   return true;
 }
 
@@ -102,8 +99,7 @@ bool enemy_hit_check()
     enemy.tex[enemy.type][enemy.this_tex].width - EMP
     ,enemy.tex[enemy.type][enemy.this_tex].height - EMP};
 
-  if (SBDL::hasIntersectionRect(barry_rect,enemy_rect))
-    die();
+  if (SBDL::hasIntersectionRect(barry_rect,enemy_rect)) die();
 
   return true;
 }
@@ -116,7 +112,7 @@ bool enemy_counter()
   {
     if(frame_counter>run_speed)
     {
-      enemy.this_tex = (enemy.this_tex+1)%4;
+      enemy.this_tex = (enemy.this_tex+1)%4; // change tex for animation
       frame_counter-=run_speed;
     }
   }
@@ -135,7 +131,6 @@ bool enemy_counter()
        s++;
     }
   }
-
   return true;
 }
 
@@ -143,10 +138,9 @@ bool show_enemy()
 {
   SBDL::showTexture(enemy.tex[enemy.type][enemy.this_tex] ,enemy.x ,enemy.y);
   if(enemy.type==Emissle && enemy.x > screen_width)
-    SBDL::showTexture
-    (enemy.tex[EmissleW][0],
-      screen_width-enemy.tex[EmissleW][0].width,
-      enemy.y);
+    SBDL::showTexture(enemy.tex[EmissleW][0],
+        screen_width-enemy.tex[EmissleW][0].width,enemy.y);
+
   return true;
 }
 

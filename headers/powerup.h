@@ -1,8 +1,7 @@
-
 enum power_ups {Pnone,Pgravity,Pspeed};
 const unsigned int powerup_rate = 500;
 const unsigned int speed_token_len = 700;
-const unsigned int speed_token_speed = 7;
+const unsigned int speed_token_speed = 5;
 
 struct power_up_type
 {
@@ -10,7 +9,6 @@ struct power_up_type
   power_ups type = Pnone;
   int y = 0.3 * screen_height;
   int x = screen_width;
-
 }power_up;
 
 power_ups powerup_rand()
@@ -19,13 +17,11 @@ power_ups powerup_rand()
   return (a==0) ? Pgravity : Pspeed;
 }
 
-
 bool add_power_up()
 {
   if(power_up.type != Pnone) return false;
   if(barry.suit==Sgravity) return false;
   if (barry.speed_token) return false;
-
   static unsigned int timer = 0;
   timer++;
   if(timer > powerup_rate)
@@ -39,6 +35,7 @@ bool add_power_up()
   }
   return true;
 }
+
 bool move_powerup()
 {
   if(power_up.x + power_up.tex.width < 0) {power_up.type = Pnone;return false;}
@@ -64,6 +61,7 @@ bool power_up_hit_check()
   }
   return true;
 }
+
 bool speed_token_counter()
 {
   if(!barry.speed_token) return false;

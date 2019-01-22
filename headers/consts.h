@@ -31,6 +31,7 @@ Sound *on_sound = NULL;
 Sound *missle_warning_sound = NULL;
 Sound *laser_warning_sound = NULL;
 
-enum sound_type { coin_s, change_barry_s,
+enum sound_type
+  { coin_s, change_barry_s,
     grav1_s , grav2_s, on_s ,
     missle_warning_s , laser_warning_s};

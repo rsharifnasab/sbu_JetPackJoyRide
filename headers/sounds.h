@@ -3,6 +3,7 @@ bool init_music()
 {
   game_music = SBDL::loadMusic("./assets/sound/music.mp3");
   if(music_state) SBDL::playMusic(game_music, -1);
+
   coin_sound = SBDL::loadSound("./assets/sound/coin.wav");
   change_barry_sound = SBDL::loadSound("./assets/sound/changebarry.wav");
   grav1_sound = SBDL::loadSound("./assets/sound/grav_change_1.wav");
@@ -11,11 +12,8 @@ bool init_music()
   missle_warning_sound = SBDL::loadSound("./assets/sound/missile_warning.wav");
   laser_warning_sound = SBDL::loadSound("./assets/sound/laser_fire_lp.wav");
 
-
   return true;
 }
-
-
 
 bool play_sound(sound_type s)
 {

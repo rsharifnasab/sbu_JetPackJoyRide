@@ -12,8 +12,6 @@
 #include "headers/enemy.h"
 #include "headers/die.h"
 
-
-
 bool init_high_score()
 {
   std::string HS="";
@@ -46,8 +44,6 @@ bool handle_keyboard()
   return true;
 }
 
-
-
 bool load_game_texture()
 {
   load_background_texture();
@@ -67,7 +63,6 @@ bool init()
   load_game_texture();
   set_coin_place();
   set_coin_pattern();
-
   return true;
 }
 
@@ -136,7 +131,6 @@ int main()
     power_up_handle();
     enemy_handle();
     show_game_texture();
-    SBDL::updateRenderScreen();
     delay_handle(start_time);
   }
   return 0;
