@@ -20,7 +20,7 @@ bool die()
     return true;
   }
   std::cout << "dying! enemy type : "<< enemy.type <<" this_tex : "<<enemy.this_tex<<"\n";
-  menu("die");
+  menu(Game_Over);
 
   return true;
 }

@@ -8,7 +8,7 @@ const unsigned int score_rate = 50;
 const unsigned int min_delay = 10;
 const unsigned short int harder = 5;
 
-bool music_state = !true;
+bool music_state = true;
 bool sound_state = true; //TODO
 
 int icon_size = 60;
