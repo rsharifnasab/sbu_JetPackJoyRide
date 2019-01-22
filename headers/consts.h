@@ -13,7 +13,7 @@ bool sound_state = true; //TODO
 
 int icon_size = 60;
 std::string main_windows_title = "welcome to JetPack JoyRide :)";
-std::string Game_Over = "Game Over";
+//std::string Game_Over = "Game Over";
 
 Font * score_font = NULL;
 unsigned int score = 0;

@@ -1,7 +1,8 @@
 
 Texture menu_back_tex,
   menu_start_tex,menu_setting_tex,
-  menu_play_tex,menu_score_tex;
+  menu_play_tex,menu_score_tex,
+  menu_my_name;
 
 SDL_Rect menu_play_rect,menu_setting_rect;
 
@@ -16,6 +17,7 @@ bool show_menu_textures()
   SBDL::showTexture(menu_start_tex, (screen_width - menu_start_tex.width ) / 2, screen_height * 6/ 7 );
   SBDL::showTexture(menu_play_tex, screen_width-menu_play_tex.width, screen_height-menu_play_tex.height);
   SBDL::showTexture(menu_setting_tex,0, screen_height-menu_setting_tex.height);
+  SBDL::showTexture(menu_my_name,0, 0);
 
   if(!first_time)
     SBDL::showTexture( menu_score_tex , (screen_width - menu_score_tex.width ) / 2, screen_height*0.07 );
@@ -39,6 +41,7 @@ bool load_menu_textures(std::string text_title)
 
   Font * menu_score_font = SBDL::loadFont("assets/font/SourceHanSansSC-Normal.otf",30);
   menu_score_tex = SBDL::createFontTexture(menu_score_font ,"distance:"+std::to_string(score)+" HIGHEST:"+std::to_string(high_score)+" COINS:"+std::to_string(coin_ate_number), 30, 220, 50);
+  menu_my_name = SBDL::createFontTexture(menu_score_font ,"Created by Roozbeh Sharifnasab", 130, 20, 250);
 
   return true;
 }
@@ -46,19 +49,26 @@ bool load_menu_textures(std::string text_title)
 
 bool new_game(std::string text_title)
 {
-  if (text_title == "Game Paused") return true;
-  if (text_title == "continue")
+  if (text_title == "pause") return true;
+
+  if (text_title == "lose")
   {
     if(coin_ate_number > pay_continue ) coin_ate_number-=pay_continue;
-    else new_game(Game_Over);
+    else new_game("restart");
   }
-  if(text_title != Game_Over) return false;
-  score = 0;
-  coin_ate_number = 0;
-  show_background(true);
+
+  if(text_title == "restart")
+  {
+    score = 0;
+    coin_ate_number = 0;
+    show_background(true);
+  }
   return true;
 }
 
+// lose : lose
+// pause : Game Paused
+// restart : restart
 
 bool menu(std::string text_title = main_windows_title)
 {

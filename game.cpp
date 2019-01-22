@@ -42,7 +42,7 @@ bool handle_keyboard()
     barry.g_revers=!barry.g_revers;
     barry.vy = 0.3 * barry.vy;
   }
-  if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("Game Paused");
+  if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("pause");
   return true;
 }
 

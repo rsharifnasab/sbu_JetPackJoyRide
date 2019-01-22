@@ -4,7 +4,7 @@ enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin, EmissleW };
 const unsigned int enemy_rate = 150;
 const unsigned int enemy_len = 140;
 unsigned long int frame_counter=0;
-const unsigned int EMP = 20;
+const int EMP = 20;
 struct
 {
   Texture tex[6][4];
@@ -67,9 +67,7 @@ bool add_enemy()
 {
   static unsigned int timer = 0;
   timer++;
-  int enemy_rate_c =(enemy.type==Elaser) ? enemy_rate *5 : enemy_rate ;
-  enemy_rate_c = enemy_rate;
-  if(timer > enemy_rate_c)
+  if(timer > enemy_rate)
   {
     frame_counter=0;
     timer-=enemy_rate;
