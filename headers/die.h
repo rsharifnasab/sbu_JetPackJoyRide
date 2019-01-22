@@ -1,4 +1,4 @@
-bool hide_it()
+bool hide_it()  //remove cause of death
 {
   enemy.x = -1000;
   enemy.type =Ecoin;
@@ -7,7 +7,7 @@ bool hide_it()
 
 bool die()
 {
-  if(enemy.type==Elaser && enemy.this_tex<2) return true;
+  if(enemy.type==Elaser && enemy.this_tex<2) return true; //laser inactive
   hide_it();
   if(barry.speed_token)
     return true;
@@ -19,6 +19,7 @@ bool die()
     barry.g_revers = false;
     return true;
   }
+
   std::cout << "dying! enemy type : "<< enemy.type <<" this_tex : "<<enemy.this_tex<<"\n";
   menu("lose");
 

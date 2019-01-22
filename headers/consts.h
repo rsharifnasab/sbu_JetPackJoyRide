@@ -9,11 +9,9 @@ const unsigned int min_delay = 10;
 const unsigned short int harder = 5;
 
 bool music_state = true;
-bool sound_state = true; //TODO
+bool sound_state = true;
 
-int icon_size = 60;
 std::string main_windows_title = "welcome to JetPack JoyRide :)";
-//std::string Game_Over = "Game Over";
 
 Font * score_font = NULL;
 unsigned int score = 0;
@@ -35,4 +33,4 @@ Sound *laser_warning_sound = NULL;
 
 enum sound_type { coin_s, change_barry_s,
     grav1_s , grav2_s, on_s ,
-    missle_warning_s , laser_warning_s}; //todo
+    missle_warning_s , laser_warning_s};
