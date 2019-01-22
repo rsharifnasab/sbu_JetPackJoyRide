@@ -40,7 +40,7 @@ bool load_enemy_texture()
   return true;
 }
 
-int enemy_y_gen() //TODO
+int enemy_y_gen()
 {
   if(enemy.type == Emissle) return (barry.y+100 - (rand()%250));
   else if(enemy.type == EzapperV) return (screen_height/10 * (rand()%8));
@@ -51,9 +51,7 @@ int enemy_y_gen() //TODO
 
 enemy_types enemy_type_rand()
 {
-  //enum enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
   int a = rand()%4;
-  //a=2;
   std::cout << "enemy " << a << " is coming \n";
   if(a==0) return EzapperV;
   else if(a==1) return EzapperN;
@@ -105,7 +103,7 @@ bool enemy_hit_check()
 
   return true;
 }
-//um enemy_types{ EzapperV ,EzapperN , Elaser ,Emissle, Ecoin };
+
 bool enemy_counter()
 {
   static int s=0;
